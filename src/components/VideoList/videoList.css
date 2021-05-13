@@ -1,0 +1,39 @@
+#page .main {
+  padding: 3rem 0;
+  text-align: left;
+}
+
+.btn-pill {
+  margin: 1rem;
+}
+
+.dp {
+  width: 58px;
+  height: 58px;
+}
+
+.card__description {
+  /* background: #f3f4f6; */
+  background: #fdf2f8;
+}
+
+.lang-pills {
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+@media only screen and (min-width: 600px) {
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+  }
+}
+
+/* On screens that are 768px wide or more  */
+@media only screen and (min-width: 768px) {
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+  }
+}

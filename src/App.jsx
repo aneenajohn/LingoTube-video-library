@@ -1,10 +1,20 @@
 import "./styles.css";
+import { Routes, Route } from "react-router-dom";
+import { DataLoader } from "./components/DataLoader";
+import { VideoList } from "./components/VideoList/videoList";
+// import { Header } from "./components/Header/header";
+// import { useVideo } from "./components/VideoList/videoContext";
 
 export default function App() {
   return (
     <div className="App">
-      <h1 className="app-header">Video Library</h1>
-      <div className="app-body">Put your app body here</div>
+      {/* <h1 className="app-header">
+        <Header />
+      </h1> */}
+      {/* <DataLoader /> */}
+      <Routes>
+        <Route path="/" element={<VideoList />} />
+      </Routes>
     </div>
   );
 }
