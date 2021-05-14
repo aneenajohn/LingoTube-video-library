@@ -4,39 +4,23 @@ import { BACKEND_URL } from "../BackendUrl";
 import { useVideo } from "./videoContext";
 import { Header } from "../Header/header";
 import "./videoList.css";
-import { getTrimmedTitle } from "../Utils/utils";
+import { getTrimmedTitle, getfilteredData } from "../Utils/utils";
 export function VideoList() {
   const [videos, setVideos] = useState([]);
   const { dispatch: videoDispatch, language } = useVideo();
+  const [isLoading, setLoader] = useState(false);
   useEffect(() => {
     (async function getVideoList() {
+      setLoader(true);
       const {
         data: { videos }
       } = await axios.get(`${BACKEND_URL}videos`);
       // console.log(data);
       setVideos(videos);
       console.log("videos", videos);
+      setLoader(false);
     })();
   }, []);
-
-  function getfilteredData(videoList, language) {
-    switch (language) {
-      case "en":
-        return videoList.filter((video) => video.language === "en");
-      case "es":
-        return videoList.filter((video) => video.language === "es");
-      case "ta":
-        return videoList.filter((video) => video.language === "ta");
-      case "hi":
-        return videoList.filter((video) => video.language === "hi");
-      case "de":
-        return videoList.filter((video) => video.language === "de");
-      case "All":
-        return videoList;
-      default:
-        return videoList;
-    }
-  }
 
   const filteredData = getfilteredData(videos, language);
   console.log("filtered data", filteredData);
@@ -97,9 +81,10 @@ export function VideoList() {
                 German
               </button>
             </div>
-
-            {videos.length === 0 ? (
-              <div>Loading....</div>
+            {isLoading ? (
+              <div class="loader">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw spinner"></i>
+              </div>
             ) : (
               <div className="container">
                 {filteredData.map((data) => (

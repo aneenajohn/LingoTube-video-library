@@ -5,3 +5,22 @@ export function getTrimmedTitle(title) {
     return trimmedTitle;
   } else return title;
 }
+
+export function getfilteredData(videoList, language) {
+  switch (language) {
+    case "en":
+      return videoList.filter((video) => video.language === "en");
+    case "es":
+      return videoList.filter((video) => video.language === "es");
+    case "ta":
+      return videoList.filter((video) => video.language === "ta");
+    case "hi":
+      return videoList.filter((video) => video.language === "hi");
+    case "de":
+      return videoList.filter((video) => video.language === "de");
+    case "All":
+      return videoList;
+    default:
+      return videoList;
+  }
+}
