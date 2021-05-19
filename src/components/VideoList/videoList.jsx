@@ -5,6 +5,7 @@ import { useVideo } from "./videoContext";
 import { Header } from "../Header/header";
 import "./videoList.css";
 import { getTrimmedTitle, getfilteredData } from "../Utils/utils";
+import { VideoCard } from "../VideoCard/VideoCard";
 export function VideoList() {
   const [videos, setVideos] = useState([]);
   const { dispatch: videoDispatch, language } = useVideo();
@@ -88,45 +89,47 @@ export function VideoList() {
             ) : (
               <div className="container">
                 {filteredData.map((data) => (
-                  <div class="card-container">
-                    <div class="imageBox">
-                      <div class="imageInn">
-                        <img
-                          class="thumbnail"
-                          src={data.imageUrl}
-                          alt="thumbnail"
-                        ></img>
-                      </div>
-                      <div class="hoverImg">
-                        <img src={data.hoverImageUrl} alt="animated"></img>
-                      </div>
-                      <div class="card__description">
-                        <div class="profile">
-                          <img
-                            class="dp"
-                            src={data.channelDp}
-                            alt="profile pic"
-                          ></img>
-                        </div>
-                        <div class="info">
-                          <p class="info__title">
-                            {getTrimmedTitle(data.title)}
-                            {/* {data.title} */}
-                          </p>
-                          <div class="info__channel">
-                            <p>
-                              <small>{data.channelName}</small>
-                            </p>
-                            <p>
-                              <small>
-                                {data.views} • {data.postedOn}
-                              </small>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <li key={data._id}>{<VideoCard data={data} />}</li>
+
+                  //     <div class="card-container">
+                  //       <div class="imageBox">
+                  //         <div class="imageInn">
+                  //           <img
+                  //             class="thumbnail"
+                  //             src={data.imageUrl}
+                  //             alt="thumbnail"
+                  //           ></img>
+                  //         </div>
+                  //         <div class="hoverImg">
+                  //           <img src={data.hoverImageUrl} alt="animated"></img>
+                  //         </div>
+                  //         <div class="card__description">
+                  //           <div class="profile">
+                  //             <img
+                  //               class="dp"
+                  //               src={data.channelDp}
+                  //               alt="profile pic"
+                  //             ></img>
+                  //           </div>
+                  //           <div class="info">
+                  //             <p class="info__title">
+                  //               {getTrimmedTitle(data.title)}
+                  //               {/* {data.title} */}
+                  //             </p>
+                  //             <div class="info__channel">
+                  //               <p>
+                  //                 <small>{data.channelName}</small>
+                  //               </p>
+                  //               <p>
+                  //                 <small>
+                  //                   {data.views} • {data.postedOn}
+                  //                 </small>
+                  //               </p>
+                  //             </div>
+                  //           </div>
+                  //         </div>
+                  //       </div>
+                  //     </div>
                 ))}
               </div>
             )}

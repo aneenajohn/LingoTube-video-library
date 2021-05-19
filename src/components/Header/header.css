@@ -11,3 +11,30 @@
   justify-content: flex-start;
   align-items: center;
 }
+
+.aside-container {
+  width: 150px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.aside-icons {
+  font-size: 20px;
+}
+
+#nav__components {
+  text-align: left;
+  padding: 1.5rem 1rem 1rem 2rem;
+}
+
+@media (max-width: 768px) {
+  .nav__menu {
+    top: 12.2%;
+  }
+}
+
+@media (max-width: 640px) {
+  .nav__menu {
+    top: 7.9%;
+  }
+}
