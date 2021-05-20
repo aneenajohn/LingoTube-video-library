@@ -27,6 +27,11 @@
   padding: 1.5rem 1rem 1rem 2rem;
 }
 
+.menu-items {
+  width: 50px;
+  text-align: left;
+}
+
 @media (max-width: 768px) {
   .nav__menu {
     top: 12.2%;

@@ -4,12 +4,15 @@ import { BACKEND_URL } from "../BackendUrl";
 import { useVideo } from "./videoContext";
 import { Header } from "../Header/header";
 import "./videoList.css";
-import { getTrimmedTitle, getfilteredData } from "../Utils/utils";
-import { VideoCard } from "../VideoCard/VideoCard";
+import { getfilteredData } from "../Utils/utils";
+import { VideoThumbnailCard } from "../VideoThumbnailCard/VideoThumbnailCard";
+import { useNavigate } from "react-router-dom";
+
 export function VideoList() {
   const [videos, setVideos] = useState([]);
   const { dispatch: videoDispatch, language } = useVideo();
   const [isLoading, setLoader] = useState(false);
+  let navigate = useNavigate();
   useEffect(() => {
     (async function getVideoList() {
       setLoader(true);
@@ -89,7 +92,14 @@ export function VideoList() {
             ) : (
               <div className="container">
                 {filteredData.map((data) => (
-                  <li key={data._id}>{<VideoCard data={data} />}</li>
+                  <li
+                    key={data._id}
+                    onClick={() =>
+                      navigate(`/video/${data._id}`, { state: filteredData })
+                    }
+                  >
+                    {<VideoThumbnailCard data={data} />}
+                  </li>
 
                   //     <div class="card-container">
                   //       <div class="imageBox">

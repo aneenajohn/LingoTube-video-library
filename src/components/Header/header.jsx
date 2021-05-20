@@ -17,7 +17,7 @@ export const Header = () => {
                 <i className="fa fa-2x fa-home" aria-hidden="true"></i>
                 <Link
                   to="/"
-                  className="nav__link"
+                  className="nav__link menu-items"
                   onClick={() => toggleActive()}
                 >
                   Home
@@ -29,7 +29,7 @@ export const Header = () => {
                 <i class="fa fa-2x fa-youtube-play" aria-hidden="true"></i>
                 <Link
                   to="/playlist"
-                  className="nav__link"
+                  className="nav__link menu-items"
                   onClick={() => toggleActive()}
                 >
                   Playlist
@@ -41,7 +41,7 @@ export const Header = () => {
                 <i class="fa fa-2x fa-thumbs-up" aria-hidden="true"></i>
                 <Link
                   to="/liked"
-                  class="nav__link"
+                  class="nav__link menu-items"
                   onClick={() => toggleActive()}
                 >
                   Liked
@@ -53,7 +53,7 @@ export const Header = () => {
                 <i class="fa fa-2x fa-history" aria-hidden="true"></i>
                 <Link
                   to="/history"
-                  class="nav__link"
+                  class="nav__link menu-items"
                   onClick={() => toggleActive()}
                 >
                   History
