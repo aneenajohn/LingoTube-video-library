@@ -2,6 +2,7 @@ import "./styles.css";
 import { Routes, Route } from "react-router-dom";
 import { DataLoader } from "./components/DataLoader";
 import { VideoList } from "./components/VideoList/videoList";
+import { VideoPage } from "./components/VideoPage/VideoPage.jsx";
 // import { Header } from "./components/Header/header";
 // import { useVideo } from "./components/VideoList/videoContext";
 
@@ -14,6 +15,7 @@ export default function App() {
       {/* <DataLoader /> */}
       <Routes>
         <Route path="/" element={<VideoList />} />
+        <Route path="/video/:videoId" element={<VideoPage />} />
       </Routes>
     </div>
   );

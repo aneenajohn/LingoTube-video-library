@@ -1,6 +1,7 @@
 import { getTrimmedTitle } from "../Utils/utils";
+import "./VideoThumbnailCard.css";
 
-export const VideoCard = ({ data }) => {
+export const VideoThumbnailCard = ({ data }) => {
   const {
     imageUrl,
     hoverImageUrl,

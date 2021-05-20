@@ -1,0 +1,48 @@
+.desc {
+  padding: 1rem;
+  position: relative;
+}
+
+.details {
+  padding-right: 0.5rem;
+}
+
+.icons {
+  display: flex;
+  width: 50px;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  right: 11%;
+  bottom: 15%;
+}
+.video-details {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #d1d5db;
+}
+@media (max-width: 400px) {
+  .main__components {
+    padding-top: 2rem;
+  }
+  .components {
+    padding: 0;
+  }
+  .video-player {
+    width: 100%;
+    height: 200px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  #page {
+    grid-template-columns: 0.8fr 4.5fr;
+  }
+
+  .video-player {
+    width: 800px;
+    height: 450px;
+  }
+  .icons {
+    bottom: 14%;
+  }
+}
