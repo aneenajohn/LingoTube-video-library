@@ -22,6 +22,9 @@ body {
   top: 180px;
   left: 60%;
 }
+.section-title {
+  padding: 1rem;
+}
 
 /* On screens that are 768px wide or less, make the font size 16px */
 @media screen and (max-width: 768px) {

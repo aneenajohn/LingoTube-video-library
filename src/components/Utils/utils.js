@@ -24,3 +24,8 @@ export function getfilteredData(videoList, language) {
       return videoList;
   }
 }
+
+export const isAddedInList = (_id, list) => {
+  const itemFound = list.find((item) => item._id === _id);
+  return itemFound;
+};

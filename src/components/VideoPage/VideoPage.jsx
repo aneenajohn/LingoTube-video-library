@@ -3,6 +3,11 @@ import { Header } from "../Header/header";
 import "./VideoPage.css";
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
+import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
+import { addToLiked } from "../ServerCalls/ServerCalls";
+import { useData } from "../DataContext/DataContext";
+import { isAddedInList } from "../Utils/utils";
+import { ToastContainer } from "react-toastify";
 
 export const VideoPage = () => {
   const { videoId } = useParams();
@@ -29,6 +34,7 @@ export const VideoPage = () => {
   } = video;
 
   console.log("video", video);
+  const { liked, DataDispatch } = useData();
   return (
     <section id="page">
       <Header />
@@ -55,11 +61,21 @@ export const VideoPage = () => {
                         {views} • {postedOn}
                       </div>
                       <div className="icons">
-                        <ThumbUpAltOutlinedIcon fontSize="large" />
+                        {isAddedInList(_id, liked) ? (
+                          <ThumbUpAltIcon fontSize="large" color="secondary" />
+                        ) : (
+                          <ThumbUpAltOutlinedIcon
+                            fontSize="large"
+                            onClick={() =>
+                              addToLiked(video, liked, DataDispatch)
+                            }
+                          />
+                        )}
                         <PlaylistAddIcon fontSize="large" />
                       </div>
                     </div>
                   </div>
+                  <ToastContainer style={{ fontSize: "medium" }} />
                 </div>
               )}
             </div>

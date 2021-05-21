@@ -1,8 +1,9 @@
 import { getTrimmedTitle } from "../Utils/utils";
 import "./VideoCard.css";
 import { useData } from "../DataContext/DataContext";
-import { deleteFromHistory } from "../ServerCalls/ServerCalls";
+import { deleteFromHistory, deleteFromLiked } from "../ServerCalls/ServerCalls";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 export const VideoCard = ({ data, fromFile }) => {
   const {
@@ -16,57 +17,57 @@ export const VideoCard = ({ data, fromFile }) => {
     postedOn
   } = data;
   const navigate = useNavigate();
-  // console.log("From file", file);
-  const { history, DataDispatch } = useData();
+
+  const { history, liked, DataDispatch } = useData();
   return (
-    <div
-      class="card-container"
-      // onClick={() => DataDispatch({ type: ADD_TO_HISTORY, payLoad: data })}
-      // onClick={() => addToHistoryHandler(data, history, DataDispatch)}
-    >
+    <div className="card-container">
       <div
-        class="imageBox"
+        className="imageBox"
         onClick={() => navigate(`/video/${data._id}`, { state: history })}
       >
-        <div class="imageInn">
-          <img class="thumbnail" src={imageUrl} alt="thumbnail"></img>
+        <div className="imageInn">
+          <img className="thumbnail" src={imageUrl} alt="thumbnail"></img>
         </div>
-        <div class="hoverImg">
+        <div className="hoverImg">
           <img src={hoverImageUrl} alt="animated"></img>
         </div>
-        <div class="card__description">
-          <div class="profile">
-            <img class="dp" src={channelDp} alt="profile pic"></img>
-          </div>
-          <div class="info">
-            <p
-              class="info__title"
-              onClick={() => navigate(`/video/${data._id}`, { state: history })}
-            >
-              {getTrimmedTitle(title)}
-              {/* {data.title} */}
+      </div>
+      <div className="card__description">
+        <div className="profile">
+          <img className="dp" src={channelDp} alt="profile pic"></img>
+        </div>
+        <div className="info">
+          <p
+            className="info__title"
+            onClick={() => navigate(`/video/${data._id}`, { state: history })}
+          >
+            {getTrimmedTitle(title)}
+            {/* {data.title} */}
+          </p>
+          <div className="info__channel">
+            <p>
+              <small>{channelName}</small>
             </p>
-            <div class="info__channel">
-              <p>
-                <small>{channelName}</small>
-              </p>
-              <p>
-                <small>
-                  {views} • {postedOn}
-                </small>
-              </p>
-              <div className="delete">
-                {fromFile === "history" && (
-                  <i
-                    class="fa fa-trash"
-                    aria-hidden="true"
-                    title={`delete from ${fromFile}`}
-                    onClick={() =>
-                      deleteFromHistory(_id, title, history, DataDispatch)
-                    }
-                  ></i>
-                )}
-              </div>
+            <p>
+              <small>
+                {views} • {postedOn}
+              </small>
+            </p>
+            <div className="delete">
+              {/* {fromFile === ("history" || "liked") && ( */}
+              <i
+                class="fa fa-trash"
+                aria-hidden="true"
+                title={`delete from ${fromFile}`}
+                onClick={() =>
+                  fromFile === "history"
+                    ? deleteFromHistory(_id, title, history, DataDispatch)
+                    : deleteFromLiked(_id, title, liked, DataDispatch)
+                } // onClick={() =>
+                //   deleteFromHistory(_id, title, history, DataDispatch)
+                // }
+              ></i>
+              {/* )} */}
             </div>
           </div>
         </div>

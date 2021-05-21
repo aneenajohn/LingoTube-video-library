@@ -4,6 +4,7 @@ import { DataLoader } from "./components/DataLoader";
 import { VideoList } from "./components/VideoList/videoList";
 import { VideoPage } from "./components/VideoPage/VideoPage.jsx";
 import { History } from "./components/History/history";
+import { Liked } from "./components/Liked/liked";
 // import { Header } from "./components/Header/header";
 // import { useVideo } from "./components/VideoList/videoContext";
 
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/" element={<VideoList />} />
         <Route path="/video/:videoId" element={<VideoPage />} />
         <Route path="/history" element={<History />} />
+        <Route path="/liked" element={<Liked />} />
       </Routes>
     </div>
   );
