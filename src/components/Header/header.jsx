@@ -1,8 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import "./header.css";
+import { useData } from "../DataContext/DataContext";
 export const Header = () => {
   const [isSelected, setSelected] = useState(false);
+  const { history } = useData();
   const toggleActive = () => setSelected(!isSelected);
   return (
     <div className="container">
@@ -53,6 +55,7 @@ export const Header = () => {
                 <i class="fa fa-2x fa-history" aria-hidden="true"></i>
                 <Link
                   to="/history"
+                  state={{ history }}
                   class="nav__link menu-items"
                   onClick={() => toggleActive()}
                 >
@@ -96,7 +99,12 @@ export const Header = () => {
           </div>
           <div className="aside-container">
             <i class="fa fa-history aside-icons" aria-hidden="true"></i>
-            <Link to="/history" id="nav__components" className="nav__link">
+            <Link
+              to="/history"
+              state={{ history }}
+              id="nav__components"
+              className="nav__link"
+            >
               History
             </Link>
           </div>

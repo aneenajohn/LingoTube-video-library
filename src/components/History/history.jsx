@@ -1,6 +1,7 @@
 import { useData } from "../DataContext/DataContext";
 import { Header } from "../Header/header";
 import { VideoCard } from "../VideoCard/VideoCard";
+import { ToastContainer } from "react-toastify";
 
 export const History = () => {
   const { history } = useData();
@@ -17,16 +18,11 @@ export const History = () => {
           <div class="container">
             {/* <div class="components"> */}
             {history.map((data) => (
-              <li
-                key={data._id}
-                // onClick={() =>
-                //   navigate(`/video/${data._id}`, { state: history })
-                // }
-              >
+              <li key={data._id}>
                 {<VideoCard data={data} fromFile={fromFile} />}
               </li>
             ))}
-            {/* </div> */}
+            <ToastContainer style={{ fontSize: "medium" }} />
           </div>
         )}
       </main>

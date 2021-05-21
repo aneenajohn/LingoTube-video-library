@@ -7,6 +7,7 @@ import "./videoList.css";
 import { getfilteredData } from "../Utils/utils";
 import { VideoThumbnailCard } from "../VideoThumbnailCard/VideoThumbnailCard";
 import { useNavigate } from "react-router-dom";
+import { useData } from "../DataContext/DataContext";
 
 export function VideoList() {
   const [videos, setVideos] = useState([]);
@@ -28,6 +29,8 @@ export function VideoList() {
 
   const filteredData = getfilteredData(videos, language);
   console.log("filtered data", filteredData);
+  const { history } = useData();
+  console.log("history", history);
   return (
     <section id="page">
       <Header />

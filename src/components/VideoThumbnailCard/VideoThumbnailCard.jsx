@@ -1,8 +1,12 @@
 import { getTrimmedTitle } from "../Utils/utils";
 import "./VideoThumbnailCard.css";
+// import { ADD_TO_HISTORY } from "../Utils/constants";
+import { useData } from "../DataContext/DataContext";
+import { addToHistoryHandler } from "../ServerCalls/ServerCalls";
 
 export const VideoThumbnailCard = ({ data }) => {
   const {
+    _id,
     imageUrl,
     hoverImageUrl,
     channelDp,
@@ -11,9 +15,14 @@ export const VideoThumbnailCard = ({ data }) => {
     views,
     postedOn
   } = data;
-
+  // console.log("From file", file);
+  const { history, DataDispatch } = useData();
   return (
-    <div class="card-container">
+    <div
+      class="card-container"
+      // onClick={() => DataDispatch({ type: ADD_TO_HISTORY, payLoad: data })}
+      onClick={() => addToHistoryHandler(data, history, DataDispatch)}
+    >
       <div class="imageBox">
         <div class="imageInn">
           <img class="thumbnail" src={imageUrl} alt="thumbnail"></img>
