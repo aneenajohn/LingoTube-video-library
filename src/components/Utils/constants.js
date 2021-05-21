@@ -1,0 +1,2 @@
+export const ADD_TO_HISTORY = "ADD_TO_HISTORY";
+export const REMOVE_FROM_HISTORY = "REMOVE_FROM_HISTORY";

@@ -1,0 +1,11 @@
+@media (max-width: 400px) {
+  .card-container {
+    width: 100%;
+  }
+  .imageBox {
+    width: 100%;
+  }
+  .thumbnail {
+    width: 100%;
+  }
+}
