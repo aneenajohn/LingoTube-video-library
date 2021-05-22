@@ -11,6 +11,8 @@ import { isAddedInList, toggleActive } from "../Utils/utils";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CREATE_NEW_PLAYLIST } from "../Utils/constants";
+import axios from "axios";
+import { BACKEND_URL } from "../BackendUrl";
 
 export const VideoPage = () => {
   const { videoId } = useParams();
@@ -39,12 +41,21 @@ export const VideoPage = () => {
 
   console.log("video", video);
   const { liked, playlist, DataDispatch } = useData();
-  const [playlistTile, setPlaylistTitle] = useState("");
+  const [playlistTitle, setPlaylistTitle] = useState("");
   const playlistInputHandler = (event) => setPlaylistTitle(event.target.value);
 
-  const createPlaylistHanlder = () => {
-    playlistTile &&
-      DataDispatch({ type: CREATE_NEW_PLAYLIST, payLoad: playlistTile });
+  const createPlaylistHanlder = async () => {
+    try {
+      const { data } = await axios.post(`${BACKEND_URL}playlist`, {
+        playlistName: playlistTitle
+      });
+      if (data.success) {
+        playlistTitle &&
+          DataDispatch({ type: CREATE_NEW_PLAYLIST, payLoad: playlistTitle });
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
   console.log("playlist", playlist);
   return (
@@ -110,16 +121,25 @@ export const VideoPage = () => {
                       <h1 class="modal__text   modal__title">
                         Add to playlist
                       </h1>
-                      <p class="modal__text">Some text in the Modal..</p>
-                      <p class="modal__text">
-                        Lorem ipsum, dolor sit amet consectetur adipisicing
-                        elit.
-                      </p>
+                      <div class="modal__text">
+                        {playlist &&
+                          playlist.map((item) => {
+                            return (
+                              <>
+                                <label>
+                                  <input type="checkbox"></input>
+                                  {item.playlistName}
+                                </label>
+                                <br />
+                              </>
+                            );
+                          })}
+                      </div>
                       <div className="newPlaylist">
                         <input
                           className="playlistName"
                           onChange={playlistInputHandler}
-                          value={playlistTile}
+                          value={playlistTitle}
                         />
                         <i
                           class="fa fa-plus add"

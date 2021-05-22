@@ -6,7 +6,7 @@ import {
   REMOVE_FROM_HISTORY,
   REMOVE_FROM_LIKED
 } from "../Utils/constants";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 export const addToHistoryHandler = async (video, history, DataDispatch) => {
   const itemFound = history.find((item) => item._id === video._id);
@@ -72,11 +72,6 @@ export const deleteFromLiked = async (id, title, liked, DataDispatch) => {
     const { data } = await axios.delete(`${BACKEND_URL}liked/${id}`);
     if (data.success) {
       DataDispatch({ type: REMOVE_FROM_LIKED, payLoad: id });
-      // toast.success(`${title} is removed from liked videos`, {
-      //   position: "top-right",
-      //   autoClose: 3000,
-      //   hideProgressBar: true
-      // });
       toast.dark(`${title} is removed from liked videos`, {
         position: "top-right",
         autoClose: 3000,
