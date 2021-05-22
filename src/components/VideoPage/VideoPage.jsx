@@ -1,4 +1,5 @@
 import { useParams, useLocation } from "react-router-dom";
+import { useState } from "react";
 import { Header } from "../Header/header";
 import "./VideoPage.css";
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
@@ -6,14 +7,17 @@ import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import { addToLiked } from "../ServerCalls/ServerCalls";
 import { useData } from "../DataContext/DataContext";
-import { isAddedInList } from "../Utils/utils";
+import { isAddedInList, toggleActive } from "../Utils/utils";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { CREATE_NEW_PLAYLIST } from "../Utils/constants";
 
 export const VideoPage = () => {
   const { videoId } = useParams();
   const { state: data } = useLocation();
   console.log("location", data);
   console.log(videoId);
+  const [isSelected, setSelected] = useState(false);
   let video;
   if (data) {
     video = data.find((video) => video._id === videoId);
@@ -34,7 +38,15 @@ export const VideoPage = () => {
   } = video;
 
   console.log("video", video);
-  const { liked, DataDispatch } = useData();
+  const { liked, playlist, DataDispatch } = useData();
+  const [playlistTile, setPlaylistTitle] = useState("");
+  const playlistInputHandler = (event) => setPlaylistTitle(event.target.value);
+
+  const createPlaylistHanlder = () => {
+    playlistTile &&
+      DataDispatch({ type: CREATE_NEW_PLAYLIST, payLoad: playlistTile });
+  };
+  console.log("playlist", playlist);
   return (
     <section id="page">
       <Header />
@@ -62,16 +74,58 @@ export const VideoPage = () => {
                       </div>
                       <div className="icons">
                         {isAddedInList(_id, liked) ? (
-                          <ThumbUpAltIcon fontSize="large" color="secondary" />
+                          <ThumbUpAltIcon
+                            fontSize="large"
+                            cursor="pointer"
+                            color="secondary"
+                          />
                         ) : (
                           <ThumbUpAltOutlinedIcon
                             fontSize="large"
+                            cursor="pointer"
                             onClick={() =>
                               addToLiked(video, liked, DataDispatch)
                             }
                           />
                         )}
-                        <PlaylistAddIcon fontSize="large" />
+                        <PlaylistAddIcon
+                          fontSize="large"
+                          cursor="pointer"
+                          onClick={() => toggleActive(isSelected, setSelected)}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    id="modalid"
+                    className={isSelected ? "modal active" : "modal"}
+                  >
+                    <div class="modal__content">
+                      <span
+                        class="close"
+                        onClick={() => toggleActive(isSelected, setSelected)}
+                      >
+                        &times;
+                      </span>
+                      <h1 class="modal__text   modal__title">
+                        Add to playlist
+                      </h1>
+                      <p class="modal__text">Some text in the Modal..</p>
+                      <p class="modal__text">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing
+                        elit.
+                      </p>
+                      <div className="newPlaylist">
+                        <input
+                          className="playlistName"
+                          onChange={playlistInputHandler}
+                          value={playlistTile}
+                        />
+                        <i
+                          class="fa fa-plus add"
+                          aria-hidden="true"
+                          onClick={createPlaylistHanlder}
+                        ></i>
                       </div>
                     </div>
                   </div>

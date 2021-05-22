@@ -20,6 +20,30 @@
   padding-bottom: 1rem;
   border-bottom: 1px solid #d1d5db;
 }
+
+.modal.active {
+  display: block;
+}
+
+.modal__title {
+  border-bottom: 1px solid rgb(109, 107, 107);
+}
+.newPlaylist {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.playlistName {
+  width: 20rem;
+  height: 3rem;
+  border: 1px solid black;
+  border-radius: 2px;
+}
+.add {
+  border: 1px solid black;
+  padding: 0.6rem 0.6rem;
+  border-radius: 2px;
+}
 @media (max-width: 400px) {
   .main__components {
     padding-top: 2rem;

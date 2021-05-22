@@ -2,6 +2,7 @@ import { useData } from "../DataContext/DataContext";
 import { Header } from "../Header/header";
 import { VideoCard } from "../VideoCard/VideoCard";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
 export const Liked = () => {
   const { liked } = useData();
@@ -12,14 +13,14 @@ export const Liked = () => {
     <section id="page">
       <Header />
       <main class="main">
+        <h1 className="section-title">Liked Videos</h1>
         <div class="main__components">
           {liked.length === 0 ? (
-            <p className="para-lead">
+            <h3 className="para-lead">
               Seems like you haven't liked any videos yet!
-            </p>
+            </h3>
           ) : (
             <>
-              <h1 className="section-title">Liked Videos</h1>
               <div class="container">
                 {/* <div class="components"> */}
                 {liked.map((data) => (
@@ -28,10 +29,10 @@ export const Liked = () => {
                   </li>
                 ))}
               </div>
+              <ToastContainer style={{ fontSize: "medium" }} />
             </>
           )}
         </div>
-        <ToastContainer style={{ fontSize: "medium" }} />
       </main>
     </section>
   );

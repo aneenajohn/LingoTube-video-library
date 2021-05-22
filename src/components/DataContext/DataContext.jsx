@@ -1,11 +1,15 @@
 import { createContext, useReducer, useContext } from "react";
 import { DataReducer } from "../DataReducer/DataReducer";
-import { history, liked } from "../Utils/constants";
+import { history, liked, playlist } from "../Utils/constants";
 export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
   // const history = [];
-  const [state, DataDispatch] = useReducer(DataReducer, { history, liked });
+  const [state, DataDispatch] = useReducer(DataReducer, {
+    history,
+    liked,
+    playlist
+  });
 
   return (
     <DataContext.Provider
@@ -14,6 +18,7 @@ export const DataProvider = ({ children }) => {
         {
           history: state.history,
           liked: state.liked,
+          playlist: state.playlist,
           DataDispatch
         })
       }

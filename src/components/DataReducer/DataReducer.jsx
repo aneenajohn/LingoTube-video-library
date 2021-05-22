@@ -2,8 +2,10 @@ import {
   ADD_TO_HISTORY,
   REMOVE_FROM_HISTORY,
   ADD_TO_LIKED,
-  REMOVE_FROM_LIKED
+  REMOVE_FROM_LIKED,
+  CREATE_NEW_PLAYLIST
 } from "../Utils/constants";
+import uuid from "react-uuid";
 export const DataReducer = (state, action) => {
   console.log("state", state);
   console.log("action", action);
@@ -33,6 +35,19 @@ export const DataReducer = (state, action) => {
       return {
         ...state,
         liked: state.liked.filter((item) => item._id !== action.payLoad)
+      };
+    case CREATE_NEW_PLAYLIST:
+      return {
+        ...state,
+        playlist: [
+          state.playlist,
+          { id: uuid(), playlistName: action.payLoad, videos: [] }
+        ]
+        // playlist: state.playlist.concat({
+        //   id: uuid(),
+        //   title: action.payLoad,
+        //   videos: []
+        // })
       };
     default:
       return state;

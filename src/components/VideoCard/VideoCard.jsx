@@ -3,7 +3,6 @@ import "./VideoCard.css";
 import { useData } from "../DataContext/DataContext";
 import { deleteFromHistory, deleteFromLiked } from "../ServerCalls/ServerCalls";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 
 export const VideoCard = ({ data, fromFile }) => {
   const {
@@ -54,7 +53,6 @@ export const VideoCard = ({ data, fromFile }) => {
               </small>
             </p>
             <div className="delete">
-              {/* {fromFile === ("history" || "liked") && ( */}
               <i
                 class="fa fa-trash"
                 aria-hidden="true"
@@ -63,11 +61,8 @@ export const VideoCard = ({ data, fromFile }) => {
                   fromFile === "history"
                     ? deleteFromHistory(_id, title, history, DataDispatch)
                     : deleteFromLiked(_id, title, liked, DataDispatch)
-                } // onClick={() =>
-                //   deleteFromHistory(_id, title, history, DataDispatch)
-                // }
+                }
               ></i>
-              {/* )} */}
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@ import { useData } from "../DataContext/DataContext";
 import { Header } from "../Header/header";
 import { VideoCard } from "../VideoCard/VideoCard";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const History = () => {
   const { history } = useData();
@@ -12,26 +13,25 @@ export const History = () => {
     <section id="page">
       <Header />
       <main class="main">
+        <h1 className="section-title">Watch history</h1>
         <div class="main__components">
           {history.length === 0 ? (
-            <p className="para-lead">
+            <h3 className="para-lead">
               Hey Polyglots,Start watching our handpicked videos!!
-            </p>
+            </h3>
           ) : (
             <>
-              <h1 className="section-title">Watch history</h1>
               <div class="container">
-                {/* <div class="components"> */}
                 {history.map((data) => (
                   <li key={data._id}>
                     {<VideoCard data={data} fromFile={fromFile} />}
                   </li>
                 ))}
               </div>
+              <ToastContainer />
             </>
           )}
         </div>
-        <ToastContainer style={{ fontSize: "medium" }} />
       </main>
     </section>
   );
