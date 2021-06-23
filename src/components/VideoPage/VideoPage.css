@@ -13,8 +13,8 @@
   justify-content: space-between;
   align-items: center;
   position: absolute;
-  right: 11%;
-  bottom: 15%;
+  right: 1%;
+  top: 23%;
 }
 .video-details {
   padding-bottom: 1rem;
@@ -44,6 +44,8 @@
   padding: 0.6rem 0.6rem;
   border-radius: 2px;
 }
+
+/* For mobile */
 @media (max-width: 400px) {
   .main__components {
     padding-top: 2rem;
@@ -55,6 +57,10 @@
     width: 100%;
     height: 200px;
   }
+  .icons {
+    right: 1%;
+    top: 24%;
+  }
 }
 
 @media only screen and (min-width: 768px) {
@@ -65,8 +71,5 @@
   .video-player {
     width: 800px;
     height: 450px;
-  }
-  .icons {
-    bottom: 14%;
   }
 }

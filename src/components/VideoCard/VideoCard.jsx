@@ -3,6 +3,7 @@ import "./VideoCard.css";
 import { useData } from "../DataContext/DataContext";
 import { deleteFromHistory, deleteFromLiked } from "../ServerCalls/ServerCalls";
 import { useNavigate } from "react-router-dom";
+import { deleteHandler } from "../Utils/utils";
 
 export const VideoCard = ({ data, fromFile }) => {
   const {
@@ -18,11 +19,22 @@ export const VideoCard = ({ data, fromFile }) => {
   const navigate = useNavigate();
 
   const { history, liked, DataDispatch } = useData();
+
+  const cardClickHandler = (fromFile) => {
+    switch (fromFile) {
+      case "playlist":
+        return navigate(`/video/${data._id}`, { state: history });
+      default:
+        return navigate(`/video/${data._id}`, { state: history });
+    }
+  };
+
   return (
     <div className="card-container">
       <div
         className="imageBox"
-        onClick={() => navigate(`/video/${data._id}`, { state: history })}
+        // onClick={() => navigate(`/video/${data._id}`, { state: history })}
+        onClick={() => cardClickHandler(fromFile)}
       >
         <div className="imageInn">
           <img className="thumbnail" src={imageUrl} alt="thumbnail"></img>
@@ -57,10 +69,20 @@ export const VideoCard = ({ data, fromFile }) => {
                 class="fa fa-trash"
                 aria-hidden="true"
                 title={`delete from ${fromFile}`}
+                // onClick={() =>
+                //   fromFile === "history"
+                //     ? deleteFromHistory(_id, title, history, DataDispatch)
+                //     : deleteFromLiked(_id, title, liked, DataDispatch)
+                // }
                 onClick={() =>
-                  fromFile === "history"
-                    ? deleteFromHistory(_id, title, history, DataDispatch)
-                    : deleteFromLiked(_id, title, liked, DataDispatch)
+                  deleteHandler(
+                    fromFile,
+                    _id,
+                    title,
+                    history,
+                    liked,
+                    DataDispatch
+                  )
                 }
               ></i>
             </div>

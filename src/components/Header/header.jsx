@@ -14,7 +14,7 @@ export const Header = () => {
             LingoPlay
           </Link>
           <ul className={isSelected ? "nav__menu active" : "nav__menu"}>
-            <li className="nav__item mobile__menu">
+            <li className="nav__item mobile__menu hide">
               <div className="aside-container">
                 <i className="fa fa-2x fa-home" aria-hidden="true"></i>
                 <Link
@@ -77,14 +77,14 @@ export const Header = () => {
       <nav class="navigation">
         <div class="nav__components">
           <div className="aside-container">
-            <i className="fa fa-home aside-icons" aria-hidden="true"></i>
             <Link to="/" id="nav__components" className="nav__link">
+              <i className="fa fa-home aside-icons" aria-hidden="true"></i>
               Home
             </Link>
           </div>
           <div className="aside-container">
             <i
-              class="fa fa-x fa-youtube-play aside-icons"
+              className="fa fa-x fa-youtube-play aside-icons"
               aria-hidden="true"
             ></i>
             <Link to="/playlist" id="nav__components" className="nav__link">

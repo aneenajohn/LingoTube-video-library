@@ -1,3 +1,5 @@
+import { deleteFromHistory, deleteFromLiked } from "../ServerCalls/ServerCalls";
+
 export function getTrimmedTitle(title) {
   if (title.length > 30) {
     var trimmedTitle = title.substr(0, 25);
@@ -32,3 +34,21 @@ export const isAddedInList = (_id, list) => {
 
 export const toggleActive = (isSelected, setSelected) =>
   setSelected(!isSelected);
+
+export const deleteHandler = (
+  fromFile,
+  _id,
+  title,
+  history,
+  liked,
+  DataDispatch
+) => {
+  switch (fromFile) {
+    case "history":
+      return deleteFromHistory(_id, title, history, DataDispatch);
+    case "liked":
+      return deleteFromLiked(_id, title, liked, DataDispatch);
+    default:
+      console.log("Not deleting anything");
+  }
+};

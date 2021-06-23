@@ -42,14 +42,15 @@ export const DataReducer = (state, action) => {
         ...state,
         playlist: [...state.playlist, action.payLoad]
       };
-    case CREATE_NEW_PLAYLIST:
-      return {
-        ...state,
-        playlist: [
-          ...state.playlist,
-          { playlistName: action.payload, videos: [] }
-        ]
-      };
+    // case CREATE_NEW_PLAYLIST:
+    //   return {
+    //     ...state,
+    //     playlist: [
+    //       ...state.playlist,
+    //       playlist: [...state.playlist, action.payLoad]
+    //       // { playlistName: action.payload, videos: [] }
+    //     // ]
+    //   };
     default:
       return state;
   }

@@ -106,6 +106,7 @@ export const VideoPage = () => {
                         />
                       </div>
                     </div>
+                    <div>{description}</div>
                   </div>
                   <div
                     id="modalid"
