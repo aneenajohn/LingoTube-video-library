@@ -6,8 +6,8 @@ import { useParams, useLocation } from "react-router-dom";
 
 export const PlaylistVideos = () => {
   const { state } = useLocation();
-  const { playlistName, videos, _id } = state;
-  console.log("location", playlistName, videos, _id);
+  const { playlistName, videos, _id: playlistId } = state;
+  console.log("location", playlistName, videos, playlistId);
   const fromFile = "playlist";
 
   return (
@@ -19,7 +19,13 @@ export const PlaylistVideos = () => {
           <div class="container">
             {videos.map((data) => (
               <li key={data._id}>
-                {<VideoCard data={data} fromFile={fromFile} />}
+                {
+                  <VideoCard
+                    data={data}
+                    fromFile={fromFile}
+                    playlistId={playlistId}
+                  />
+                }
               </li>
             ))}
           </div>

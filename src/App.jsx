@@ -24,6 +24,10 @@ export default function App() {
         <Route path="/liked" element={<Liked />} />
         <Route path="/playlist" element={<Playlists />} />
         <Route path="/playlist/:playlistId" element={<PlaylistVideos />} />
+        <Route
+          path="/playlist/:playlistId/video/:videoId"
+          element={<VideoPage />}
+        />
       </Routes>
     </div>
   );

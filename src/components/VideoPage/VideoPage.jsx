@@ -15,6 +15,7 @@ import axios from "axios";
 import { BACKEND_URL } from "../BackendUrl";
 
 export const VideoPage = () => {
+  console.log("useParams", useParams());
   const { videoId } = useParams();
   const { state: data } = useLocation();
   console.log("location", data);

@@ -5,7 +5,7 @@ import { deleteFromHistory, deleteFromLiked } from "../ServerCalls/ServerCalls";
 import { useNavigate } from "react-router-dom";
 import { deleteHandler } from "../Utils/utils";
 
-export const VideoCard = ({ data, fromFile }) => {
+export const VideoCard = ({ data, fromFile, playlistId }) => {
   const {
     _id,
     imageUrl,
@@ -23,7 +23,9 @@ export const VideoCard = ({ data, fromFile }) => {
   const cardClickHandler = (fromFile) => {
     switch (fromFile) {
       case "playlist":
-        return navigate(`/video/${data._id}`, { state: history });
+        return navigate(`/playlist/${playlistId}/video/${data._id}`, {
+          state: history
+        });
       default:
         return navigate(`/video/${data._id}`, { state: history });
     }
