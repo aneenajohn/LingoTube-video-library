@@ -48,32 +48,48 @@ export const DataReducer = (state, action) => {
         playlist: [...state.playlist, action.payLoad]
       };
     case ADD_VIDEO_TO_PLAYLIST:
-      // console.log("inside add video");
-      let playlistIndex = state.playlist.findIndex(
-        (item) => Number(item._id) === Number(action.payLoad.playlistId)
-      );
-      console.log({ playlistIndex });
-      state.playlist[playlistIndex]?.videos.unshift(action.payLoad.videoId);
+      return {
+        ...state,
+        playlist: addToPlaylist({
+          playlist: state.playlist,
+          playlistId: action.payLoad.playlistId,
+          video: action.payLoad.video
+        })
+      };
 
-      return { ...state };
+    // console.log("inside add video");
+    // let playlistIndex = state.playlist.findIndex(
+    //   (item) => Number(item._id) === Number(action.payLoad.playlistId)
+    // );
+    // console.log({ playlistIndex });
+    // state.playlist[playlistIndex]?.videos.unshift(action.payLoad.videoId);
+
+    // return { ...state, playlist: [...state.playlist] };
 
     // return {
     //   ...state,
     //   playlist: [
-    //     ...state.playlist,
-    //     state.playlist[playlistIndex]?.videos.action?.payLoad.video
+    //     ...state.playlist
     //   ]
     // };
 
     case REMOVE_VIDEO_FROM_PLAYLIST:
-      // let index = state.playlist.findIndex(
-      //   (item) => Number(item._id) === Number(action.payLoad.playlistId)
-      // );
-      // console.log(index);
-      state.playlist[action.payLoad.index]?.videos.filter(
-        (item) => item._id !== action.payLoad._id
-      );
-      return { ...state };
+      return {
+        ...state,
+        playlist: removeFromPlaylist({
+          playlist: state.playlist,
+          playlistId: action.payload.playlistId,
+          videoId: action.payload._id
+        })
+      };
+    // let index = state.playlist.findIndex(
+    //   (item) => Number(item._id) === Number(action.payLoad.playlistId)
+    // );
+    // console.log(index);
+    // state.playlist[action.payLoad.index]?.videos.filter(
+    //   (item) => item._id !== action.payLoad._id
+    // );
+    // return { ...state };
     // return {
     //   ...state,
     //   playlist: [
@@ -121,3 +137,26 @@ export const DataReducer = (state, action) => {
       return state;
   }
 };
+
+function addToPlaylist({ playlist, playlistId, video }) {
+  const playlistFound = playlist.find((item) => item._id === playlistId);
+  if (playlistFound.videos.includes(video._id)) {
+    return playlist;
+  } else {
+    playlistFound.videos.unshift(video);
+    return playlist.map((item) =>
+      item._id === playlistId ? playlistFound : item
+    );
+  }
+}
+
+function removeFromPlaylist({ playlist, playlistId, videoId }) {
+  const playlistFound = playlist.find((item) => item._id === playlistId);
+  const updatedPlaylist = {
+    ...playlistFound,
+    videos: playlistFound.videos.filter((item) => item._id !== videoId)
+  };
+  return playlist.map((item) =>
+    item._id === playlistId ? updatedPlaylist : item
+  );
+}

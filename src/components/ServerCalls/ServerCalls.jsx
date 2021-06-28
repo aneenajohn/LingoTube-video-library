@@ -106,7 +106,7 @@ export const deleteVideoFromPlaylist = async (
     if (success) {
       DataDispatch({
         type: REMOVE_VIDEO_FROM_PLAYLIST,
-        payLoad: { index, playlistId, _id }
+        payLoad: { playlistId, _id }
       });
       toast.dark(`${title} is removed from playlist`, {
         position: "top-right",
