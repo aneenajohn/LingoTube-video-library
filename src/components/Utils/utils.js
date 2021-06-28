@@ -1,7 +1,11 @@
-import { deleteFromHistory, deleteFromLiked } from "../ServerCalls/ServerCalls";
+import {
+  deleteFromHistory,
+  deleteFromLiked,
+  deleteVideoFromPlaylist
+} from "../ServerCalls/ServerCalls";
 
 export function getTrimmedTitle(title) {
-  if (title.length > 30) {
+  if (title?.length > 30) {
     var trimmedTitle = title.substr(0, 25);
     trimmedTitle = trimmedTitle.concat("...");
     return trimmedTitle;
@@ -41,13 +45,16 @@ export const deleteHandler = (
   title,
   history,
   liked,
-  DataDispatch
+  DataDispatch,
+  playlistId
 ) => {
   switch (fromFile) {
     case "history":
       return deleteFromHistory(_id, title, history, DataDispatch);
     case "liked":
       return deleteFromLiked(_id, title, liked, DataDispatch);
+    case "playlist":
+      return deleteVideoFromPlaylist(_id, title, DataDispatch, playlistId);
     default:
       console.log("Not deleting anything");
   }

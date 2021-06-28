@@ -17,19 +17,21 @@ export const PlaylistVideos = () => {
         <h1 className="section-title">{playlistName}</h1>
         <div class="main__components">
           <div class="container">
-            {videos.map((data) => (
+            {videos?.map((data, index) => (
               <li key={data._id}>
                 {
                   <VideoCard
                     data={data}
                     fromFile={fromFile}
                     playlistId={playlistId}
+                    index={index}
                   />
                 }
               </li>
             ))}
           </div>
         </div>
+        <ToastContainer />
       </main>
     </section>
   );

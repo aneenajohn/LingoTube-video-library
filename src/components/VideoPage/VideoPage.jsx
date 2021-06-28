@@ -8,9 +8,13 @@ import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import { addToLiked } from "../ServerCalls/ServerCalls";
 import { useData } from "../DataContext/DataContext";
 import { isAddedInList, toggleActive } from "../Utils/utils";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { CREATE_NEW_PLAYLIST } from "../Utils/constants";
+import {
+  CREATE_NEW_PLAYLIST,
+  SET_PLAYLIST_CHOSEN,
+  ADD_VIDEO_TO_PLAYLIST
+} from "../Utils/constants";
 import axios from "axios";
 import { BACKEND_URL } from "../BackendUrl";
 
@@ -41,7 +45,7 @@ export const VideoPage = () => {
   } = video;
 
   console.log("video", video);
-  const { liked, playlist, DataDispatch } = useData();
+  const { liked, playlist, chosenPlaylist, DataDispatch } = useData();
   const [playlistTitle, setPlaylistTitle] = useState("");
   const playlistInputHandler = (event) => setPlaylistTitle(event.target.value);
 
@@ -53,6 +57,29 @@ export const VideoPage = () => {
       if (data.success) {
         playlistTitle &&
           DataDispatch({ type: CREATE_NEW_PLAYLIST, payLoad: playlistTitle });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const addVideoToPlaylistHandler = async (playlistId, videoId) => {
+    console.log("playlistId", playlistId, "videoId", videoId);
+    try {
+      const { data } = await axios.post(
+        `${BACKEND_URL}playlist/${playlistId}/${videoId}`
+      );
+      console.log("data posted in playlist", data);
+      if (data.success) {
+        DataDispatch({
+          type: ADD_VIDEO_TO_PLAYLIST,
+          payLoad: { playlistId, video }
+        });
+        toast.success(`Video added to playlist`, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true
+        });
       }
     } catch (err) {
       console.error(err);
@@ -125,15 +152,29 @@ export const VideoPage = () => {
                       </h1>
                       <div class="modal__text">
                         {playlist &&
-                          playlist.map((item) => {
+                          playlist.map((item, index) => {
                             return (
-                              <>
+                              <div>
                                 <label>
-                                  <input type="checkbox"></input>
-                                  {item.playlistName}
+                                  <input
+                                    type="checkbox"
+                                    onChange={() => {
+                                      console.log("video Id in caller: ", _id);
+                                      addVideoToPlaylistHandler(item._id, _id);
+                                      DataDispatch({
+                                        type: SET_PLAYLIST_CHOSEN,
+                                        payLoad: item.playlistName
+                                      });
+                                    }}
+                                    checked={
+                                      chosenPlaylist &&
+                                      chosenPlaylist === item?.playlistName
+                                    }
+                                  ></input>
+                                  {item?.playlistName}
                                 </label>
                                 <br />
-                              </>
+                              </div>
                             );
                           })}
                       </div>

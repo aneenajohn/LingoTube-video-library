@@ -4,7 +4,8 @@ import {
   ADD_TO_HISTORY,
   ADD_TO_LIKED,
   REMOVE_FROM_HISTORY,
-  REMOVE_FROM_LIKED
+  REMOVE_FROM_LIKED,
+  REMOVE_VIDEO_FROM_PLAYLIST
 } from "../Utils/constants";
 import { toast } from "react-toastify";
 
@@ -29,6 +30,12 @@ export const addToHistoryHandler = async (video, history, DataDispatch) => {
 
 export const deleteFromHistory = async (id, title, history, DataDispatch) => {
   try {
+    DataDispatch({ type: REMOVE_FROM_HISTORY, payLoad: id });
+    toast.dark(`${title} is removed from history`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: true
+    });
     const { data } = await axios.delete(`${BACKEND_URL}history/${id}`);
     if (data.success) {
       DataDispatch({ type: REMOVE_FROM_HISTORY, payLoad: id });
@@ -83,4 +90,31 @@ export const deleteFromLiked = async (id, title, liked, DataDispatch) => {
   }
 };
 
-// export const deleteVideoFromPlaylist = async (id, title, DataDispatch) => {};
+export const deleteVideoFromPlaylist = async (
+  _id,
+  title,
+  DataDispatch,
+  playlistId,
+  index
+) => {
+  console.log("index before calling dispatch: ", index);
+  try {
+    const {
+      data: { success }
+    } = await axios.delete(`${BACKEND_URL}playlist/${playlistId}/${_id}`);
+
+    if (success) {
+      DataDispatch({
+        type: REMOVE_VIDEO_FROM_PLAYLIST,
+        payLoad: { index, playlistId, _id }
+      });
+      toast.dark(`${title} is removed from playlist`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true
+      });
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};

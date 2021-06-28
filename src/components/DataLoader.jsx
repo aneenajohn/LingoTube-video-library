@@ -46,7 +46,7 @@ export function DataLoader() {
         console.error(err);
       }
     })();
-  }, []);
+  }, [DataDispatch]);
 
   return null;
 }

@@ -5,7 +5,7 @@ import { deleteFromHistory, deleteFromLiked } from "../ServerCalls/ServerCalls";
 import { useNavigate } from "react-router-dom";
 import { deleteHandler } from "../Utils/utils";
 
-export const VideoCard = ({ data, fromFile, playlistId }) => {
+export const VideoCard = ({ data, fromFile, playlistId, index }) => {
   const {
     _id,
     imageUrl,
@@ -19,6 +19,7 @@ export const VideoCard = ({ data, fromFile, playlistId }) => {
   const navigate = useNavigate();
 
   const { history, liked, DataDispatch } = useData();
+  console.log({ index });
 
   const cardClickHandler = (fromFile) => {
     switch (fromFile) {
@@ -83,7 +84,9 @@ export const VideoCard = ({ data, fromFile, playlistId }) => {
                     title,
                     history,
                     liked,
-                    DataDispatch
+                    DataDispatch,
+                    playlistId,
+                    index
                   )
                 }
               ></i>
