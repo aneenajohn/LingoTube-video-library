@@ -61,14 +61,24 @@ export const DataReducer = (state, action) => {
       };
 
     case REMOVE_VIDEO_FROM_PLAYLIST:
-      return {
-        ...state,
-        playlist: removeFromPlaylist({
-          playlist: state.playlist,
-          playlistId: action.payLoad.playlistId,
-          videoId: action.payLoad._id
-        })
-      };
+      const playlistIndex = state.playlist.findIndex(
+        (item) => item._id === action.payLoad.playlistId
+      );
+      const videoIndex = state.playlist[playlistIndex].videos.findIndex(
+        (video) => video._id === action.payLoad._id
+      );
+      if (playlistIndex !== -1) {
+        state.playlist[playlistIndex].videos.splice(videoIndex, 1);
+      }
+      return { ...state };
+    // return {
+    //   ...state,
+    //   playlist: removeFromPlaylist({
+    //     playlist: state.playlist,
+    //     playlistId: action.payLoad.playlistId,
+    //     videoId: action.payLoad._id
+    //   })
+    // };
     default:
       return state;
   }
@@ -98,9 +108,7 @@ function removeFromPlaylist({ playlist, playlistId, videoId }) {
   console.log({ videoId });
   const updatedPlaylist = {
     ...playlistFound,
-    videos: playlistFound.videos.filter(
-      (item) => Number(item._id) !== Number(videoId)
-    )
+    videos: playlistFound.videos.filter((video) => video._id !== videoId)
   };
   console.log({ updatedPlaylist });
   return playlist.map((item) =>
