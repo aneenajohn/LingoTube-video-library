@@ -5,7 +5,8 @@ import { useData } from "./DataContext/DataContext";
 import {
   ADD_TO_HISTORY,
   ADD_TO_LIKED,
-  ADD_TO_PLAYLIST
+  ADD_TO_PLAYLIST,
+  SET_PLAYLIST
 } from "./Utils/constants";
 
 export function DataLoader() {
@@ -38,9 +39,10 @@ export function DataLoader() {
         } = await axios.get(`${BACKEND_URL}playlist`);
         console.log("playlist", success, playlists);
         if (success) {
-          playlists.map((playlist) =>
-            DataDispatch({ type: ADD_TO_PLAYLIST, payLoad: playlist })
-          );
+          // playlists.map((playlist) =>
+          //   DataDispatch({ type: ADD_TO_PLAYLIST, payLoad: playlist })
+          // );
+          DataDispatch({ type: SET_PLAYLIST, payLoad: playlists });
         }
       } catch (err) {
         console.error(err);

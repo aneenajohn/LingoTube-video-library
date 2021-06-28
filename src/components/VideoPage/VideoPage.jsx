@@ -152,7 +152,7 @@ export const VideoPage = () => {
                       </h1>
                       <div class="modal__text">
                         {playlist &&
-                          playlist.map((item, index) => {
+                          playlist?.map((item, index) => {
                             return (
                               <div>
                                 <label>

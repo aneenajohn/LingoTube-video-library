@@ -94,26 +94,34 @@ export const deleteVideoFromPlaylist = async (
   _id,
   title,
   DataDispatch,
-  playlistId,
-  index
+  playlistId
 ) => {
-  console.log("index before calling dispatch: ", index);
   try {
+    DataDispatch({
+      type: REMOVE_VIDEO_FROM_PLAYLIST,
+      payLoad: { playlistId, _id }
+    });
+    toast.dark(`${title} is removed from playlist`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: true
+    });
+
     const {
       data: { success }
     } = await axios.delete(`${BACKEND_URL}playlist/${playlistId}/${_id}`);
 
-    if (success) {
-      DataDispatch({
-        type: REMOVE_VIDEO_FROM_PLAYLIST,
-        payLoad: { playlistId, _id }
-      });
-      toast.dark(`${title} is removed from playlist`, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: true
-      });
-    }
+    // if (success) {
+    // DataDispatch({
+    //   type: REMOVE_VIDEO_FROM_PLAYLIST,
+    //   payLoad: { playlistId, _id }
+    // });
+    // toast.dark(`${title} is removed from playlist`, {
+    //   position: "top-right",
+    //   autoClose: 3000,
+    //   hideProgressBar: true
+    // });
+    // }
   } catch (err) {
     console.error(err);
   }
