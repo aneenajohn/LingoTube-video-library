@@ -8,13 +8,17 @@ import {
   SET_PLAYLIST_CHOSEN,
   ADD_VIDEO_TO_PLAYLIST,
   REMOVE_VIDEO_FROM_PLAYLIST,
-  SET_PLAYLIST
+  SET_PLAYLIST,
+  SET_HISTORY,
+  SET_LIKED
 } from "../Utils/constants";
 
 export const DataReducer = (state, action) => {
   console.log("state", state);
   console.log("action", action);
   switch (action.type) {
+    case SET_HISTORY:
+      return { ...state, history: action.payLoad };
     case ADD_TO_HISTORY:
       return {
         ...state,
@@ -29,6 +33,8 @@ export const DataReducer = (state, action) => {
         ...state,
         history: state.history.filter((item) => item._id !== action.payLoad)
       };
+    case SET_LIKED:
+      return { ...state, liked: action.payLoad };
     case ADD_TO_LIKED:
       return {
         ...state,
@@ -70,7 +76,7 @@ export const DataReducer = (state, action) => {
       if (playlistIndex !== -1) {
         state.playlist[playlistIndex].videos.splice(videoIndex, 1);
       }
-      return { ...state };
+      return { ...state, playlist: [state.playlist] };
     // return {
     //   ...state,
     //   playlist: removeFromPlaylist({
@@ -79,6 +85,7 @@ export const DataReducer = (state, action) => {
     //     videoId: action.payLoad._id
     //   })
     // };
+
     default:
       return state;
   }
