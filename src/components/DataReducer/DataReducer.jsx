@@ -10,7 +10,8 @@ import {
   REMOVE_VIDEO_FROM_PLAYLIST,
   SET_PLAYLIST,
   SET_HISTORY,
-  SET_LIKED
+  SET_LIKED,
+  CLEAR_HISTORY
 } from "../Utils/constants";
 
 export const DataReducer = (state, action) => {
@@ -85,6 +86,11 @@ export const DataReducer = (state, action) => {
     //     videoId: action.payLoad._id
     //   })
     // };
+    case CLEAR_HISTORY:
+      return {
+        ...state,
+        history: []
+      };
 
     default:
       return state;
