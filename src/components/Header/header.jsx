@@ -6,6 +6,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useAuth } from "../Context/authProvider";
 // import Avatar from "@material-ui/core/Avatar";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
 import { SET_LOGOUT } from "../Utils/constants";
 
 export const Header = () => {
@@ -119,7 +120,7 @@ export const Header = () => {
             </p>
           ) : (
             <p className="para" onClick={() => navigate("/login")}>
-              Login
+              Login <LockOpenIcon />
             </p>
           )}
           {/* <p className="para" onClick={() => logoutHandler()}>
