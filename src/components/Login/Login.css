@@ -61,6 +61,17 @@ input[name="email"] {
 .header {
   width: 100vw;
 }
+
+.setPasswordVisibility {
+  position: relative;
+}
+.showPassword {
+  position: absolute;
+  bottom: 1.3rem;
+  left: 90%;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 400px) {
   .inputForm {
     height: calc(100vh - 15rem);
