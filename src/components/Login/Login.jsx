@@ -29,6 +29,11 @@ export function Login() {
   }
 
   async function loginHandler() {
+    toast.info(`Please hold on..We are logging you in!`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: true
+    });
     const { data } = await loginService(loginState.email, loginState.password);
     console.log(data);
     const { success, token } = data;
