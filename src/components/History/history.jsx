@@ -4,11 +4,15 @@ import { VideoCard } from "../VideoCard/VideoCard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { deleteAllHandler } from "../ServerCalls/ServerCalls";
+import { useAuth } from "../Context/authProvider";
 
 export const History = () => {
   const { history, DataDispatch } = useData();
   const fromFile = "history";
   const deleteAllLabel = `delete all from ${fromFile}`;
+  const {
+    authState: { userToken }
+  } = useAuth();
 
   console.log("history in history route", history);
   return (
@@ -21,7 +25,9 @@ export const History = () => {
             class="fa fa-trash"
             aria-hidden="true"
             title={deleteAllLabel}
-            onClick={() => deleteAllHandler(deleteAllLabel, DataDispatch)}
+            onClick={() =>
+              deleteAllHandler(deleteAllLabel, DataDispatch, userToken)
+            }
           ></i>
         </div>
         <div class="main__components">

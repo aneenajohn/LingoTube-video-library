@@ -34,6 +34,7 @@ export const DataReducer = (state, action) => {
         ...state,
         history: state.history.filter((item) => item._id !== action.payLoad)
       };
+
     case SET_LIKED:
       return { ...state, liked: action.payLoad };
     case ADD_TO_LIKED:
@@ -48,10 +49,19 @@ export const DataReducer = (state, action) => {
         ...state,
         liked: state.liked.filter((item) => item._id !== action.payLoad)
       };
+
     case SET_PLAYLIST_CHOSEN:
       return { ...state, chosenPlaylist: action.payLoad };
     case SET_PLAYLIST:
       return { ...state, playlist: action.payLoad };
+    case CREATE_NEW_PLAYLIST:
+      return {
+        ...state,
+        playlist: [
+          ...state.playlist,
+          { playlistName: action.payload, videos: [] }
+        ]
+      };
     case ADD_TO_PLAYLIST:
       return {
         ...state,

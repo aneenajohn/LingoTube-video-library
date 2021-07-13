@@ -1,8 +1,8 @@
 import { getTrimmedTitle } from "../Utils/utils";
 import "./VideoThumbnailCard.css";
-// import { ADD_TO_HISTORY } from "../Utils/constants";
 import { useData } from "../DataContext/DataContext";
 import { addToHistoryHandler } from "../ServerCalls/ServerCalls";
+import { useAuth } from "../Context/authProvider";
 
 export const VideoThumbnailCard = ({ data }) => {
   const {
@@ -15,20 +15,24 @@ export const VideoThumbnailCard = ({ data }) => {
     views,
     postedOn
   } = data;
-  // console.log("From file", file);
   const { history, DataDispatch } = useData();
+  const {
+    authState: { userToken }
+  } = useAuth();
   return (
     <div
       class="card-container"
       // onClick={() => DataDispatch({ type: ADD_TO_HISTORY, payLoad: data })}
-      onClick={() => addToHistoryHandler(data, history, DataDispatch)}
+      onClick={() =>
+        addToHistoryHandler(data, history, DataDispatch, userToken)
+      }
     >
       <div class="imageBox">
         <div class="imageInn">
           <img class="thumbnail" src={imageUrl} alt="thumbnail"></img>
         </div>
         <div class="hoverImg">
-          <img src={hoverImageUrl} alt="animated"></img>
+          {/* <img src={hoverImageUrl} alt="animated"></img> */}
         </div>
         <div class="card__description">
           <div class="profile">

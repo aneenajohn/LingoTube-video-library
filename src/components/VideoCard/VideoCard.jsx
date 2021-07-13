@@ -1,9 +1,9 @@
 import { getTrimmedTitle } from "../Utils/utils";
 import "./VideoCard.css";
 import { useData } from "../DataContext/DataContext";
-import { deleteFromHistory, deleteFromLiked } from "../ServerCalls/ServerCalls";
 import { useNavigate } from "react-router-dom";
 import { deleteHandler } from "../Utils/utils";
+import { useAuth } from "../Context/authProvider";
 
 export const VideoCard = ({ data, fromFile, playlistId, index }) => {
   const {
@@ -17,9 +17,12 @@ export const VideoCard = ({ data, fromFile, playlistId, index }) => {
     postedOn
   } = data;
   const navigate = useNavigate();
-
+  const {
+    authState: { userToken }
+  } = useAuth();
   const { history, liked, DataDispatch } = useData();
   console.log({ index });
+  console.log("token in video card", userToken);
 
   const cardClickHandler = (fromFile) => {
     switch (fromFile) {
@@ -72,11 +75,6 @@ export const VideoCard = ({ data, fromFile, playlistId, index }) => {
                 class="fa fa-trash"
                 aria-hidden="true"
                 title={`delete from ${fromFile}`}
-                // onClick={() =>
-                //   fromFile === "history"
-                //     ? deleteFromHistory(_id, title, history, DataDispatch)
-                //     : deleteFromLiked(_id, title, liked, DataDispatch)
-                // }
                 onClick={() =>
                   deleteHandler(
                     fromFile,
@@ -86,7 +84,7 @@ export const VideoCard = ({ data, fromFile, playlistId, index }) => {
                     liked,
                     DataDispatch,
                     playlistId,
-                    index
+                    userToken
                   )
                 }
               ></i>

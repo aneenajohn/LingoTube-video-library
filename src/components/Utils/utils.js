@@ -46,15 +46,23 @@ export const deleteHandler = (
   history,
   liked,
   DataDispatch,
-  playlistId
+  playlistId,
+  userToken
 ) => {
+  console.log("token in utils", userToken);
   switch (fromFile) {
     case "history":
-      return deleteFromHistory(_id, title, history, DataDispatch);
+      return deleteFromHistory(_id, title, history, DataDispatch, userToken);
     case "liked":
-      return deleteFromLiked(_id, title, liked, DataDispatch);
+      return deleteFromLiked(_id, title, liked, DataDispatch, userToken);
     case "playlist":
-      return deleteVideoFromPlaylist(_id, title, DataDispatch, playlistId);
+      return deleteVideoFromPlaylist(
+        _id,
+        title,
+        DataDispatch,
+        playlistId,
+        userToken
+      );
     default:
       console.log("Not deleting anything");
   }

@@ -7,6 +7,9 @@ import { History } from "./components/History/history";
 import { Liked } from "./components/Liked/liked";
 import { Playlists } from "./components/Playlists/playlists";
 import { PlaylistVideos } from "./components/Playlists/playlistVideos";
+import { PrivateRoute } from "./PrivateRoute";
+import { Login } from "./components/Login/Login";
+import { Signup } from "./components/Signup/Signup";
 // import { Header } from "./components/Header/header";
 // import { useVideo } from "./components/VideoList/videoContext";
 
@@ -20,14 +23,19 @@ export default function App() {
       <Routes>
         <Route path="/" element={<VideoList />} />
         <Route path="/video/:videoId" element={<VideoPage />} />
-        <Route path="/history" element={<History />} />
-        <Route path="/liked" element={<Liked />} />
-        <Route path="/playlist" element={<Playlists />} />
-        <Route path="/playlist/:playlistId" element={<PlaylistVideos />} />
-        <Route
+        <PrivateRoute path="/history" element={<History />} />
+        <PrivateRoute path="/liked" element={<Liked />} />
+        <PrivateRoute path="/playlist" element={<Playlists />} />
+        <PrivateRoute
+          path="/playlist/:playlistId"
+          element={<PlaylistVideos />}
+        />
+        <PrivateRoute
           path="/playlist/:playlistId/video/:videoId"
           element={<VideoPage />}
         />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </div>
   );

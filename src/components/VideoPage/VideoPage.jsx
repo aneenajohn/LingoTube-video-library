@@ -17,6 +17,7 @@ import {
 } from "../Utils/constants";
 import axios from "axios";
 import { BACKEND_URL } from "../BackendUrl";
+import { useAuth } from "../Context/authProvider";
 
 export const VideoPage = () => {
   console.log("useParams", useParams());
@@ -47,13 +48,25 @@ export const VideoPage = () => {
   console.log("video", video);
   const { liked, playlist, chosenPlaylist, DataDispatch } = useData();
   const [playlistTitle, setPlaylistTitle] = useState("");
-  const playlistInputHandler = (event) => setPlaylistTitle(event.target.value);
 
-  const createPlaylistHanlder = async () => {
+  const playlistInputHandler = (event) => setPlaylistTitle(event.target.value);
+  const {
+    authState: { userToken }
+  } = useAuth();
+
+  const createPlaylistHandler = async (userToken) => {
     try {
-      const { data } = await axios.post(`${BACKEND_URL}playlist`, {
-        playlistName: playlistTitle
-      });
+      const { data } = await axios.post(
+        `${BACKEND_URL}playlist`,
+        {
+          playlistName: playlistTitle
+        },
+        {
+          headers: {
+            authorization: userToken
+          }
+        }
+      );
       if (data.success) {
         playlistTitle &&
           DataDispatch({ type: CREATE_NEW_PLAYLIST, payLoad: playlistTitle });
@@ -63,12 +76,20 @@ export const VideoPage = () => {
     }
   };
 
-  const addVideoToPlaylistHandler = async (playlistId, videoId) => {
+  const addVideoToPlaylistHandler = async (playlistId, videoId, userToken) => {
     console.log("playlistId", playlistId, "videoId", videoId);
     try {
-      const { data } = await axios.post(
-        `${BACKEND_URL}playlist/${playlistId}/${videoId}`
-      );
+      toast.success(`Video is being added to playlist`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true
+      });
+      const { data } = await axios({
+        method: "post",
+        url: `${BACKEND_URL}playlist/${playlistId}/${videoId}`,
+        headers: { authorization: userToken }
+      });
+
       console.log("data posted in playlist", data);
       if (data.success) {
         DataDispatch({
@@ -123,7 +144,7 @@ export const VideoPage = () => {
                             fontSize="large"
                             cursor="pointer"
                             onClick={() =>
-                              addToLiked(video, liked, DataDispatch)
+                              addToLiked(video, liked, DataDispatch, userToken)
                             }
                           />
                         )}
@@ -160,7 +181,11 @@ export const VideoPage = () => {
                                     type="checkbox"
                                     onChange={() => {
                                       console.log("video Id in caller: ", _id);
-                                      addVideoToPlaylistHandler(item._id, _id);
+                                      addVideoToPlaylistHandler(
+                                        item._id,
+                                        _id,
+                                        userToken
+                                      );
                                       DataDispatch({
                                         type: SET_PLAYLIST_CHOSEN,
                                         payLoad: item.playlistName
@@ -187,7 +212,7 @@ export const VideoPage = () => {
                         <i
                           class="fa fa-plus add"
                           aria-hidden="true"
-                          onClick={createPlaylistHanlder}
+                          onClick={() => createPlaylistHandler(userToken)}
                         ></i>
                       </div>
                     </div>

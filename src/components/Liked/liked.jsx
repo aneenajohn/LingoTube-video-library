@@ -8,7 +8,6 @@ export const Liked = () => {
   const { liked } = useData();
   const fromFile = "liked";
   console.log("liked in liked route", liked);
-
   return (
     <section id="page">
       <Header />
