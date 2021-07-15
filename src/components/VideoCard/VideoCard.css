@@ -1,0 +1,27 @@
+.delete {
+  position: relative;
+}
+.fa-trash {
+  position: absolute;
+  right: 1%;
+  bottom: 15%;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+@media (max-width: 400px) {
+  .card-container {
+    width: 100%;
+  }
+  .imageBox {
+    width: 100%;
+  }
+  .thumbnail {
+    width: 100%;
+  }
+  .fa-trash {
+    z-index: 1;
+    right: -10%;
+    bottom: 20%;
+  }
+}

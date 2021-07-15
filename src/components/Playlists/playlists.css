@@ -1,0 +1,50 @@
+.card-container.playlists {
+  position: relative;
+}
+
+.thumbnail-overlay-side-panel {
+  width: 92px;
+  height: 180px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgb(0 0 0 / 80%);
+  color: var(--ow-font-color);
+  text-align: center;
+}
+
+.playlist-overlay {
+  position: relative;
+  top: 32%;
+}
+
+.playlist-icon {
+  fill: #fff;
+  width: 24px;
+  height: 24px;
+}
+.hoverImg.playlist-hover {
+  cursor: pointer;
+  opacity: 1;
+  z-index: 1;
+  background: rgb(0 0 0 / 80%);
+  width: 320px;
+  height: 180px;
+  color: #fff;
+  display: none;
+}
+.hoverImg.playlist-hover:hover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.play-icon {
+  width: 24px;
+  height: 24px;
+  fill: #fff;
+}
+.card__description.playlistName {
+  display: block;
+  text-transform: capitalize;
+}
