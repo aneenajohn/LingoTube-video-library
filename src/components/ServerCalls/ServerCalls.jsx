@@ -82,7 +82,7 @@ export const deleteFromHistory = async (
     //   autoClose: 3000,
     //   hideProgressBar: true
     // });
-    console.log("token in history", userToken);
+    // console.log("token in history", userToken);
     const { data } = await axios.delete(`${BACKEND_URL}history/${id}`, {
       headers: {
         authorization: userToken
@@ -169,7 +169,7 @@ export const deleteFromLiked = async (
   userToken
 ) => {
   try {
-    console.log("token in history", userToken);
+    // console.log("token in liked", userToken);
     const { data } = await axios.delete(`${BACKEND_URL}liked/${id}`, {
       headers: {
         authorization: userToken
@@ -196,25 +196,6 @@ export const deleteVideoFromPlaylist = async (
   userToken
 ) => {
   try {
-    DataDispatch({
-      type: REMOVE_VIDEO_FROM_PLAYLIST,
-      payLoad: { playlistId, _id }
-    });
-    toast.dark(`${title} is removed from playlist`, {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: true
-    });
-
-    const {
-      data: { success }
-    } = await axios.delete(`${BACKEND_URL}playlist/${playlistId}/${_id}`, {
-      headers: {
-        authorization: userToken
-      }
-    });
-
-    // if (success) {
     // DataDispatch({
     //   type: REMOVE_VIDEO_FROM_PLAYLIST,
     //   payLoad: { playlistId, _id }
@@ -224,7 +205,26 @@ export const deleteVideoFromPlaylist = async (
     //   autoClose: 3000,
     //   hideProgressBar: true
     // });
-    // }
+
+    const {
+      data: { success }
+    } = await axios.delete(`${BACKEND_URL}playlist/${playlistId}/${_id}`, {
+      headers: {
+        authorization: userToken
+      }
+    });
+
+    if (success) {
+      DataDispatch({
+        type: REMOVE_VIDEO_FROM_PLAYLIST,
+        payLoad: { playlistId, _id }
+      });
+      toast.dark(`${title} is removed from playlist`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true
+      });
+    }
   } catch (err) {
     console.error(err);
   }

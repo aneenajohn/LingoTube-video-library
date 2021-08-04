@@ -14,7 +14,7 @@ export const History = () => {
     authState: { userToken }
   } = useAuth();
 
-  console.log("history in history route", history);
+  // console.log("history in history route", history);
   return (
     <section id="page">
       <Header />

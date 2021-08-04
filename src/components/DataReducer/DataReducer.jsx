@@ -17,8 +17,8 @@ import {
 import uuid from "react-uuid";
 
 export const DataReducer = (state, action) => {
-  console.log("state", state);
-  console.log("action", action);
+  // console.log("state", state);
+  // console.log("action", action);
   switch (action.type) {
     case SET_HISTORY:
       return { ...state, history: action.payLoad };
@@ -164,6 +164,6 @@ function removeFromPlaylist({ playlist, playlistId, videoId }) {
   };
   console.log({ updatedPlaylist });
   return playlist.map((item) =>
-    item._id === playlistId ? updatedPlaylist : item
+    item._id === updatedPlaylist._id ? updatedPlaylist : item
   );
 }
