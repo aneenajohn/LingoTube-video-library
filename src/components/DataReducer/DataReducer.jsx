@@ -5,6 +5,7 @@ import {
   REMOVE_FROM_LIKED,
   ADD_TO_PLAYLIST,
   CREATE_NEW_PLAYLIST,
+  DELETE_PLAYLIST,
   SET_PLAYLIST_CHOSEN,
   ADD_VIDEO_TO_PLAYLIST,
   REMOVE_VIDEO_FROM_PLAYLIST,
@@ -13,6 +14,7 @@ import {
   SET_LIKED,
   CLEAR_HISTORY
 } from "../Utils/constants";
+import uuid from "react-uuid";
 
 export const DataReducer = (state, action) => {
   console.log("state", state);
@@ -49,17 +51,34 @@ export const DataReducer = (state, action) => {
         ...state,
         liked: state.liked.filter((item) => item._id !== action.payLoad)
       };
+    case DELETE_PLAYLIST:
+      return {
+        ...state,
+        playlist: state.playlist.filter((item) => item._id !== action.payLoad)
+      };
 
     case SET_PLAYLIST_CHOSEN:
       return { ...state, chosenPlaylist: action.payLoad };
     case SET_PLAYLIST:
       return { ...state, playlist: action.payLoad };
+    // case CREATE_NEW_PLAYLIST:
+    //   return {
+    //     ...state,
+    //     playlist: [
+    //       ...state.playlist,
+    //       { playlistName: action.payload, videos: [] }
+    //     ]
+    //   };
     case CREATE_NEW_PLAYLIST:
       return {
         ...state,
         playlist: [
           ...state.playlist,
-          { playlistName: action.payload, videos: [] }
+          {
+            _id: uuid(),
+            playlistName: action.payLoad.name,
+            videos: [action.payLoad.video]
+          }
         ]
       };
     case ADD_TO_PLAYLIST:
@@ -78,24 +97,34 @@ export const DataReducer = (state, action) => {
       };
 
     case REMOVE_VIDEO_FROM_PLAYLIST:
-      const playlistIndex = state.playlist.findIndex(
-        (item) => item._id === action.payLoad.playlistId
-      );
-      const videoIndex = state.playlist[playlistIndex].videos.findIndex(
-        (video) => video._id === action.payLoad._id
-      );
-      if (playlistIndex !== -1) {
-        state.playlist[playlistIndex].videos.splice(videoIndex, 1);
-      }
-      return { ...state, playlist: [state.playlist] };
-    // return {
-    //   ...state,
-    //   playlist: removeFromPlaylist({
-    //     playlist: state.playlist,
-    //     playlistId: action.payLoad.playlistId,
-    //     videoId: action.payLoad._id
-    //   })
-    // };
+      return {
+        ...state,
+        playlist: removeFromPlaylist({
+          playlist: state.playlist,
+          playlistId: action.payLoad.playlistId,
+          videoId: action.payLoad._id
+        })
+      };
+    // const playlistIndex = state.playlist.findIndex(
+    //   (item) => item._id === action.payLoad.playlistId
+    // );
+    // console.log({ playlistIndex });
+    // const videoIndex = state.playlist[playlistIndex].videos.findIndex(
+    //   (video) => video._id === action.payLoad._id
+    // );
+    // console.log({ videoIndex });
+    // if (playlistIndex !== -1) {
+    //   return {
+    //     ...state,
+    //     playlist: state.playlist[playlistIndex].videos.filter(
+    //       (item) => item._id !== action.payLoad._id
+    //     )
+    //   };
+    // }
+    // return { ...state, playlist: [state.playlist] };
+
+    // playlist: state.playlist[playlistIndex].videos.splice(videoIndex, 1)
+
     case CLEAR_HISTORY:
       return {
         ...state,
@@ -117,7 +146,7 @@ function addToPlaylist({ playlist, playlistId, video }) {
   if (isVideoFound) {
     return playlist;
   } else {
-    playlistFound.videos.push(video);
+    playlistFound.videos.unshift(video);
     // return playlistFound;
     return playlist.map((item) =>
       item._id === playlistId ? playlistFound : item

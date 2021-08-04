@@ -2,6 +2,11 @@
   position: relative;
 }
 
+.container.playlist {
+  grid-row-gap: 1.8rem;
+  grid-column-gap: 10px;
+}
+
 .thumbnail-overlay-side-panel {
   width: 92px;
   height: 180px;
@@ -47,4 +52,18 @@
 .card__description.playlistName {
   display: block;
   text-transform: capitalize;
+  border: none;
+  outline: none;
+}
+.card_detail {
+  width: 320px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.remove-playlist {
+  position: absolute;
+  bottom: 10px;
+  right: 26px;
 }

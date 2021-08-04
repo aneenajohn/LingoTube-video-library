@@ -17,7 +17,7 @@ export const PlaylistVideos = () => {
         <h1 className="section-title">{playlistName}</h1>
         <div class="main__components">
           <div class="container">
-            {videos?.map((data, index) => (
+            {videos?.reverse().map((data, index) => (
               <li key={data._id}>
                 {
                   <VideoCard

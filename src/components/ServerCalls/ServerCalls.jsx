@@ -6,7 +6,8 @@ import {
   REMOVE_FROM_HISTORY,
   REMOVE_FROM_LIKED,
   REMOVE_VIDEO_FROM_PLAYLIST,
-  CLEAR_HISTORY
+  CLEAR_HISTORY,
+  DELETE_PLAYLIST
 } from "../Utils/constants";
 import { toast } from "react-toastify";
 
@@ -114,6 +115,7 @@ export const deleteAllHandler = async (
         authorization: userToken
       }
     });
+    console.log(success, history);
     if (success) {
       DataDispatch({ type: CLEAR_HISTORY });
       toast.dark(`Deleted all files from history`, {
@@ -223,6 +225,38 @@ export const deleteVideoFromPlaylist = async (
     //   hideProgressBar: true
     // });
     // }
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const deletePlaylistClicked = async (
+  playlistId,
+  playlistName,
+  DataDispatch,
+  userToken
+) => {
+  try {
+    console.log("userToken from delete playlist", userToken);
+    const { data } = await axios.delete(
+      `${BACKEND_URL}playlist/${playlistId}`,
+      {
+        headers: {
+          authorization: userToken
+        }
+      }
+    );
+    if (data.success) {
+      toast.dark(`${playlistName} is removed from playlist`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true
+      });
+      DataDispatch({
+        type: DELETE_PLAYLIST,
+        payLoad: playlistId
+      });
+    }
   } catch (err) {
     console.error(err);
   }

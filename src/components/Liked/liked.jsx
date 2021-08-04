@@ -22,7 +22,7 @@ export const Liked = () => {
             <>
               <div class="container">
                 {/* <div class="components"> */}
-                {liked.map((data) => (
+                {liked.reverse().map((data) => (
                   <li key={data._id}>
                     {<VideoCard data={data} fromFile={fromFile} />}
                   </li>

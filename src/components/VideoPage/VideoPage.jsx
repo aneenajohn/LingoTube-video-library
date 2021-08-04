@@ -54,12 +54,20 @@ export const VideoPage = () => {
     authState: { userToken }
   } = useAuth();
 
-  const createPlaylistHandler = async (userToken) => {
+  const createPlaylistHandler = async (userToken, playlistTitle, video) => {
     try {
+      console.log(playlistTitle);
+      playlistTitle &&
+        DataDispatch({
+          type: CREATE_NEW_PLAYLIST,
+          payLoad: { name: playlistTitle, video }
+        });
+
       const { data } = await axios.post(
         `${BACKEND_URL}playlist`,
         {
-          playlistName: playlistTitle
+          playlistName: playlistTitle,
+          video
         },
         {
           headers: {
@@ -67,10 +75,10 @@ export const VideoPage = () => {
           }
         }
       );
-      if (data.success) {
-        playlistTitle &&
-          DataDispatch({ type: CREATE_NEW_PLAYLIST, payLoad: playlistTitle });
-      }
+      //   if (data.success) {
+      //     playlistTitle &&
+      //       DataDispatch({ type: CREATE_NEW_PLAYLIST, payLoad: playlistTitle });
+      //   }
     } catch (err) {
       console.error(err);
     }
@@ -212,7 +220,13 @@ export const VideoPage = () => {
                         <i
                           class="fa fa-plus add"
                           aria-hidden="true"
-                          onClick={() => createPlaylistHandler(userToken)}
+                          onClick={() =>
+                            createPlaylistHandler(
+                              userToken,
+                              playlistTitle,
+                              video
+                            )
+                          }
                         ></i>
                       </div>
                     </div>

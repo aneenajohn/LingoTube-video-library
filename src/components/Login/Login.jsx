@@ -31,6 +31,7 @@ export function Login() {
   }
 
   async function loginHandler() {
+    if(loginState.email && loginState.password){
     toast.info(`Please hold on..We are logging you in!`, {
       position: "top-right",
       autoClose: 3000,
@@ -64,6 +65,13 @@ export function Login() {
         hideProgressBar: true
       });
     }
+  }else {
+    toast.dark(`Please provide necessary details to login`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: true
+    });
+  }
   }
 
   return (

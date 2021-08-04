@@ -38,7 +38,7 @@ export const History = () => {
           ) : (
             <>
               <div class="container">
-                {history.map((data) => (
+                {history.reverse().map((data) => (
                   <li key={data._id}>
                     {<VideoCard data={data} fromFile={fromFile} />}
                   </li>

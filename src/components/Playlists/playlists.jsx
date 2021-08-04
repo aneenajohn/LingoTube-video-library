@@ -3,33 +3,43 @@ import { useData } from "../DataContext/DataContext";
 import "./playlists.css";
 import "../VideoList/videoList.css";
 import { useNavigate } from "react-router-dom";
+import { deletePlaylistClicked } from "../ServerCalls/ServerCalls";
+import { useAuth } from "../Context/authProvider";
 
 export const Playlists = () => {
-  const { playlist } = useData();
+  const { playlist, DataDispatch } = useData();
   const fromFile = "playlist";
   console.log("playlist in playlist route", playlist);
   let navigate = useNavigate();
+  const {
+    authState: { userToken }
+  } = useAuth();
   return (
     <section id="page">
       <Header />
       <main className="main">
         <h1 className="section-title">Playlists</h1>
-        <div className="container">
+        <div className="container playlist">
           {playlist.map((item) => {
             return (
               <div
                 key={item?._id}
                 className="card-container playlists"
-                onClick={() =>
-                  navigate(`/playlist/${item._id}`, { state: item })
-                }
+                // onClick={() =>
+                //   navigate(`/playlist/${item._id}`, { state: item })
+                // }
               >
                 {item?.videos?.length ? (
-                  <div className="imageBox">
+                  <div
+                    className="imageBox"
+                    onClick={() =>
+                      navigate(`/playlist/${item._id}`, { state: item })
+                    }
+                  >
                     <div className="imageInn">
                       <img
                         className="thumbnail"
-                        src={item?.videos[item.videos.length - 1]?.imageUrl}
+                        src={item?.videos[0]?.imageUrl}
                         alt="thumbnail"
                       ></img>
                       <div className="hoverImg playlist-hover     ">
@@ -68,10 +78,30 @@ export const Playlists = () => {
                   </div>
                 ) : null}
                 {item?.videos?.length ? (
-                  <div className="card__description playlistName">
-                    <p>
-                      <strong>{item.playlistName}</strong>
-                    </p>
+                  <div className="card_detail">
+                    <div
+                      className="card__description playlistName"
+                      onClick={() =>
+                        navigate(`/playlist/${item._id}`, { state: item })
+                      }
+                    >
+                      <p>
+                        <strong>{item.playlistName}</strong>
+                      </p>
+                    </div>
+                    <i
+                      class="fa fa-trash remove-playlist"
+                      aria-hidden="true"
+                      // title={`delete from ${fromFile}`}
+                      onClick={() =>
+                        deletePlaylistClicked(
+                          item._id,
+                          item.playlistName,
+                          DataDispatch,
+                          userToken
+                        )
+                      }
+                    ></i>
                   </div>
                 ) : (
                   <div>
@@ -92,3 +122,16 @@ export const Playlists = () => {
     </section>
   );
 };
+
+// onClick={() =>
+//   deleteHandler(
+//     fromFile,
+//     _id,
+//     title,
+//     history,
+//     liked,
+//     DataDispatch,
+//     playlistId,
+//     userToken
+//   )
+// }
